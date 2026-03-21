@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'rol',
     ];
 
     /**
@@ -46,7 +47,33 @@ class User extends Authenticatable
         ];
     }
 
-    public function grupos() {
-        return $this->belongsToMany(Grupo::class);
+    public function grupos()
+    {
+        return $this->belongsToMany(Grupo::class)->withTimestamps();
+    }
+ 
+    public function gruposComoProfesor()
+    {
+        return $this->hasMany(Grupo::class, 'profesor_id');
+    }
+ 
+    public function calificaciones()
+    {
+        return $this->hasMany(Calificacion::class);
+    }
+
+    public function esProfesor(): bool
+    {
+        return $this->rol === 'profesor';
+    }
+ 
+    public function esAlumno(): bool
+    {
+        return $this->rol === 'alumno';
+    }
+ 
+    public function esAdmin(): bool
+    {
+        return $this->rol === 'admin';
     }
 }

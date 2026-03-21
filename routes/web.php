@@ -13,11 +13,13 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $materiasCount = Materia::count();
-    $gruposCount = Grupo::count();
-    $misInscripciones = auth()->user()->grupos()->count();
+    $user              = Auth::user();
+    $materiasCount     = Materia::count();
+    $gruposCount       = Grupo::count();
+    $misInscripciones  = $user->grupos()->count();
+    $misGruposProfesor = $user->esProfesor() ? Grupo::where('profesor_id', $user->id)->count() : 0;
     
-    return view('dashboard', compact('materiasCount', 'gruposCount', 'misInscripciones'));
+    return view('dashboard', compact('materiasCount', 'gruposCount', 'misInscripciones', 'misGruposProfesor'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Todas las rutas protegidas por login
@@ -43,7 +45,15 @@ Route::middleware('auth')->group(function () {
     // Inscripciones
     Route::get('/mi-horario', [InscripcionController::class, 'index'])->name('inscripciones.index');
     Route::post('/inscripciones', [InscripcionController::class, 'store'])->name('inscripciones.store');
-    Route::post('/inscripciones/baja/{id}', [InscripcionController::class, 'destroy'])->name('inscripciones.destroy');
+    Route::delete('/inscripciones/{id}', [InscripcionController::class, 'destroy'])->name('inscripciones.destroy');
+    
+    // Calificaciones — Alumno
+    Route::get('/boleta', [App\Http\Controllers\CalificacionController::class, 'miBoleta'])->name('calificaciones.boleta');
+    
+    // Calificaciones — Profesor
+    Route::get('/calificaciones/grupos', [App\Http\Controllers\CalificacionController::class, 'misGrupos'])->name('calificaciones.grupos');
+    Route::get('/calificaciones/{grupoId}/capturar', [App\Http\Controllers\CalificacionController::class, 'capturar'])->name('calificaciones.capturar');
+    Route::post('/calificaciones/{grupoId}/guardar', [App\Http\Controllers\CalificacionController::class, 'guardar'])->name('calificaciones.guardar');
 });
 
 require __DIR__.'/auth.php';
