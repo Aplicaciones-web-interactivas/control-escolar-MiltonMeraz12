@@ -108,10 +108,11 @@
                 </div>
             </div>
 
-            <div class="text-center">
+            <div class="flex justify-center mt-6">
                 <a href="{{ route('inscripciones.index') }}"
-                   class="text-sm text-slate-500 hover:text-slate-800 transition-colors">
-                    ← Volver a mis inscripciones
+                class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold text-slate-600 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 hover:text-blue-600 hover:border-blue-200 transition-all shadow-sm group">
+                    <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                    Volver a mi horario
                 </a>
             </div>
         </div>

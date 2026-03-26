@@ -12,6 +12,11 @@ class InscripcionController extends Controller
     {
         $user = Auth::user();
         
+        // Verificar si el usuario no es alumno y redirigirlo
+        if (method_exists($user, 'esAlumno') && !$user->esAlumno()) {
+            return redirect()->route('dashboard')->with('error', 'Acceso denegado. Solo los alumnos pueden armar un horario.');
+        }
+
         $misGrupos = $user->grupos()->with(['materia', 'calificaciones' => function ($q) use ($user) {
             $q->where('user_id', $user->id);
         }])->get();
@@ -39,7 +44,7 @@ class InscripcionController extends Controller
             });
         }
  
-        $gruposDisponibles = $query->get();
+        $gruposDisponibles = $query->paginate(5)->withQueryString();
  
         $semestres = \App\Models\Materia::distinct()->pluck('semestre')->sort()->values();
         $areas     = \App\Models\Materia::distinct()->pluck('area')->filter()->sort()->values();

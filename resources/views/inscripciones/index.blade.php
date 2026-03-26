@@ -27,7 +27,7 @@
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div>
                             <h3 class="text-base font-bold text-slate-800">Grupos Disponibles</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">{{ $gruposDisponibles->count() }} grupo(s) encontrado(s)</p>
+                            <p class="text-xs text-slate-500 mt-0.5">{{ $gruposDisponibles->total() }} grupo(s) encontrado(s)</p>
                         </div>
                         <form method="GET" action="{{ route('inscripciones.index') }}"
                               class="flex flex-wrap gap-2 items-center">
@@ -149,6 +149,13 @@
                         </tbody>
                     </table>
                 </div>
+
+                @if($gruposDisponibles->hasPages())
+                    <div class="px-6 py-4 border-t border-slate-100 bg-slate-50/50">
+                        {{ $gruposDisponibles->links() }}
+                    </div>
+                @endif
+                
             </div>
  
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">

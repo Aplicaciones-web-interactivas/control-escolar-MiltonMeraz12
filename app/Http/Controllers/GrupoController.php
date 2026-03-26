@@ -12,7 +12,7 @@ class GrupoController extends Controller
     public function index()
     {
         // Traemos los grupos con su materia y su profesor asociado
-        $grupos = Grupo::with(['materia', 'profesor'])->get();
+        $grupos = Grupo::with(['materia', 'profesor'])->paginate(5);
         $materias = Materia::all();
         
         // Traemos todos los usuarios (Por ahora todos, después filtraremos por rol profesor)

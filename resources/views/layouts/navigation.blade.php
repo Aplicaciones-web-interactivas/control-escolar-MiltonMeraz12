@@ -42,9 +42,6 @@
                         <x-nav-link :href="route('grupos.index')" :active="request()->routeIs('grupos.*')">
                             Horarios y Grupos
                         </x-nav-link>
-                        <x-nav-link :href="route('inscripciones.index')" :active="request()->routeIs('inscripciones.*')">
-                            Mi Horario
-                        </x-nav-link>
                     @endif
 
                 </div>
@@ -133,9 +130,6 @@
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('grupos.index')" :active="request()->routeIs('grupos.*')">
                     Horarios y Grupos
-                </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('inscripciones.index')" :active="request()->routeIs('inscripciones.*')">
-                    Mi Horario
                 </x-responsive-nav-link>
             @endif
 

@@ -9,7 +9,7 @@ class MateriaController extends Controller
 {
     public function index()
     {
-        $materias = Materia::all();
+        $materias = Materia::paginate(5);
         return view('materias.index', compact('materias'));
     }
 
