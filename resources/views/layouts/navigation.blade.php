@@ -24,11 +24,17 @@
                         <x-nav-link :href="route('calificaciones.boleta')" :active="request()->routeIs('calificaciones.boleta')">
                             Mi Boleta
                         </x-nav-link>
+                        <x-nav-link :href="route('entregas.index')" :active="request()->routeIs('entregas.*')">
+                            Mis Tareas
+                        </x-nav-link>
 
                     {{-- PROFESOR --}}
                     @elseif(Auth::user()->esProfesor())
                         <x-nav-link :href="route('calificaciones.grupos')" :active="request()->routeIs('calificaciones.*')">
-                            Mis Calificaciones
+                            Calificaciones
+                        </x-nav-link>
+                        <x-nav-link :href="route('tareas.index')" :active="request()->routeIs('tareas.*')">
+                            Tareas
                         </x-nav-link>
                         <x-nav-link :href="route('grupos.index')" :active="request()->routeIs('grupos.*')">
                             Grupos
@@ -113,12 +119,18 @@
                 <x-responsive-nav-link :href="route('calificaciones.boleta')" :active="request()->routeIs('calificaciones.boleta')">
                     Mi Boleta
                 </x-responsive-nav-link>
+                <x-nav-link :href="route('entregas.index')" :active="request()->routeIs('entregas.*')">
+                    Mis Tareas
+                </x-nav-link>
 
             {{-- PROFESOR --}}
             @elseif(Auth::user()->esProfesor())
                 <x-responsive-nav-link :href="route('calificaciones.grupos')" :active="request()->routeIs('calificaciones.*')">
-                    Mis Calificaciones
+                    Calificaciones
                 </x-responsive-nav-link>
+                <x-nav-link :href="route('tareas.index')" :active="request()->routeIs('tareas.*')">
+                    Tareas
+                </x-nav-link>
                 <x-responsive-nav-link :href="route('grupos.index')" :active="request()->routeIs('grupos.*')">
                     Grupos
                 </x-responsive-nav-link>

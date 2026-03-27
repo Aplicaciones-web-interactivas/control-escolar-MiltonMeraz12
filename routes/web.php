@@ -54,6 +54,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/calificaciones/grupos', [App\Http\Controllers\CalificacionController::class, 'misGrupos'])->name('calificaciones.grupos');
     Route::get('/calificaciones/{grupoId}/capturar', [App\Http\Controllers\CalificacionController::class, 'capturar'])->name('calificaciones.capturar');
     Route::post('/calificaciones/{grupoId}/guardar', [App\Http\Controllers\CalificacionController::class, 'guardar'])->name('calificaciones.guardar');
+
+    // Tareas — Profesor
+    Route::get('/tareas', [App\Http\Controllers\TareaController::class, 'index'])->name('tareas.index');
+    Route::get('/tareas/crear', [App\Http\Controllers\TareaController::class, 'create'])->name('tareas.crear');
+    Route::post('/tareas', [App\Http\Controllers\TareaController::class, 'store'])->name('tareas.store');
+    Route::get('/tareas/{id}/revisar', [App\Http\Controllers\TareaController::class, 'revisar'])->name('tareas.revisar');
+    Route::post('/tareas/comentar/{entregaId}', [App\Http\Controllers\TareaController::class, 'comentar'])->name('tareas.comentar');
+    Route::delete('/tareas/{id}', [App\Http\Controllers\TareaController::class, 'destroy'])->name('tareas.destroy');
+
+    // Entregas — Alumno
+    Route::get('/mis-tareas', [App\Http\Controllers\EntregaController::class, 'index'])->name('entregas.index');
+    Route::post('/entregas/{tareaId}', [App\Http\Controllers\EntregaController::class, 'store'])->name('entregas.store');
+    Route::get('/entregas/descargar/{entregaId}', [App\Http\Controllers\EntregaController::class, 'descargar'])->name('entregas.descargar');
 });
 
 require __DIR__.'/auth.php';

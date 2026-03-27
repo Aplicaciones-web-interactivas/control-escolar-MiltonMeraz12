@@ -51,4 +51,9 @@ class Grupo extends Model
         if (!$this->cupo) return 0;
         return (int) round(($this->alumnos()->count() / $this->cupo) * 100);
     }
+
+    public function tareas()
+    {
+        return $this->hasMany(Tarea::class);
+    }
 }

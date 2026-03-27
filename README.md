@@ -1,76 +1,83 @@
 # 🎓 Sistema de Control Escolar - UASLP
 
-Sistema integral para la gestión académica desarrollado como parte de la formación en la **Facultad de Ingeniería (ISI)**. Este proyecto permite administrar el catálogo de materias, la apertura de grupos con horarios específicos y la inscripción de alumnos.
-
 ## 🚀 Características principales
 
-- **Autenticación Personalizada:** Login y Registro con diseño Split-Screen moderno.
-- **Gestión de Materias:** CRUD completo con datos académicos (clave, créditos, semestre, área).
-- **Horarios y Grupos:** Apertura de grupos vinculados a materias y profesores, con selección flexible de días y horas.
-- **Inscripciones:** Sistema para que los alumnos armen su carga académica en tiempo real.
-- **Dashboard Estadístico:** Panel principal con resumen de registros en la base de datos.
+- **Autenticación por roles:** Alumno, Profesor y Admin con vistas y permisos separados.
+- **Gestión de Materias:** CRUD completo con clave, créditos, semestre y área.
+- **Horarios y Grupos:** Apertura de grupos vinculados a materias y profesores.
+- **Inscripciones:** Alumnos arman su carga académica con validación de cupo.
+- **Calificaciones:** Profesores capturan parciales; alumnos consultan su boleta.
+- **Tareas:** Profesores asignan tareas con fecha límite; alumnos suben PDFs como entrega.
+
+## 👥 Roles y accesos
+
+| Rol          | Puede hacer                                              |
+| ------------ | -------------------------------------------------------- |
+| **Admin**    | Gestionar materias y grupos                              |
+| **Profesor** | Capturar calificaciones, crear tareas, revisar entregas  |
+| **Alumno**   | Inscribirse a grupos, ver boleta, entregar tareas en PDF |
 
 ## 🛠️ Requisitos previos
-
-Antes de comenzar, asegúrate de tener instalado:
 
 - [WSL2 (Ubuntu)](https://learn.microsoft.com/en-us/windows/wsl/install)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - Git
 
-## 💻 Instalación y Configuración
-
-Sigue estos pasos para levantar el proyecto en una laptop nueva:
+## 💻 Instalación en una laptop nueva
 
 ### 1. Clonar el repositorio
 
 ```bash
-git clone [https://github.com/tu-usuario/control_escolar-interactivas.git](https://github.com/tu-usuario/control_escolar-interactivas.git)
-
+git clone https://github.com/tu-usuario/control_escolar-interactivas.git
 cd control_escolar-interactivas
 ```
 
-### 2. Configurar el entorno (.env)
-
-Copia el archivo de ejemplo y genera la clave de la aplicación:
+### 2. Instalar dependencias PHP
 
 ```bash
-cp .env.example .env
-```
-
-### 3. Levantar contenedores con Laravel Sail
-
-```bash
-# Instalar dependencias de PHP (si no tienes PHP local, Sail lo hace por ti)
 docker run --rm \
     -u "$(id -u):$(id -g)" \
     -v "$(pwd):/var/www/html" \
     -w /var/www/html \
     laravelsail/php82-composer:latest \
     composer install --ignore-platform-reqs
+```
 
-# Levantar el servicio
+### 3. Configurar entorno
+
+```bash
+cp .env.example .env
+```
+
+### 4. Levantar Docker
+
+```bash
 ./vendor/bin/sail up -d
 ```
 
-### 4. Permisos de archivos (Linux/WSL2)
-
-Para evitar errores de escritura en los logs o al editar archivos:
+### 5. Permisos (Linux/WSL2)
 
 ```bash
 sudo chown -R $USER:$USER .
 ```
 
-### 5. Base de Datos y Frontend
+### 6. Base de datos, assets y storage
 
 ```bash
-# Generar clave de aplicación
 ./vendor/bin/sail artisan key:generate
-
-# Ejecutar migraciones
-./vendor/bin/sail artisan migrate:fresh
-
-# Instalar y compilar assets (Tailwind CSS)
+./vendor/bin/sail artisan migrate:fresh --seed
+./vendor/bin/sail artisan storage:link
 ./vendor/bin/sail npm install
 ./vendor/bin/sail npm run build
 ```
+
+## 🔑 Usuarios de prueba (seeder)
+
+| Email                             | Contraseña  | Rol      |
+| --------------------------------- | ----------- | -------- |
+| `merazmilton9@gmail.com`          | `temporal1` | Alumno   |
+| `renata@example.com`              | `temporal1` | Alumno   |
+| `admin@example.com`               | `temporal1` | Admin    |
+| `muniz@example.com`               | `temporal1` | Profesor |
+| `meade@example.com`               | `temporal1` | Profesor |
+| _(cualquier profesor del seeder)_ | `temporal1` | Profesor |
